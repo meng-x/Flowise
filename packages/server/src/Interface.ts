@@ -29,6 +29,8 @@ export interface IChatMessage {
     content: string
     chatflowid: string
     sourceDocuments?: string
+    usedTools?: string
+    fileAnnotations?: string
     chatType: string
     chatId: string
     memoryType?: string
@@ -48,11 +50,29 @@ export interface ITool {
     createdDate: Date
 }
 
+export interface IAssistant {
+    id: string
+    details: string
+    credential: string
+    iconSrc?: string
+    updatedDate: Date
+    createdDate: Date
+}
+
 export interface ICredential {
     id: string
     name: string
     credentialName: string
     encryptedData: string
+    updatedDate: Date
+    createdDate: Date
+}
+
+export interface IVariable {
+    id: string
+    name: string
+    value: string
+    type: string
     updatedDate: Date
     createdDate: Date
 }
@@ -155,12 +175,13 @@ export interface IncomingInput {
     overrideConfig?: ICommonObject
     socketIOClientId?: string
     chatId?: string
+    stopNodeId?: string
 }
 
 export interface IActiveChatflows {
     [key: string]: {
         startingNodes: IReactFlowNode[]
-        endingNodeData: INodeData
+        endingNodeData?: INodeData
         inSync: boolean
         overrideConfig?: ICommonObject
     }
@@ -176,12 +197,6 @@ export interface IOverrideConfig {
     label: string
     name: string
     type: string
-}
-
-export interface IDatabaseExport {
-    chatmessages: IChatMessage[]
-    chatflows: IChatFlow[]
-    apikeys: ICommonObject[]
 }
 
 export type ICredentialDataDecrypted = ICommonObject
